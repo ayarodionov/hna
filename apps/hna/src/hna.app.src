@@ -1,0 +1,24 @@
+{application, hna,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, {hna_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    inets,
+    ssl,
+    lager,
+    jsone,
+    cowboy
+   ]},
+  {env,[
+    {newsman_len,    50},
+    {newsman_period, 300000}   % 5 minutes
+  ]},
+  
+  {modules, []},
+
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.

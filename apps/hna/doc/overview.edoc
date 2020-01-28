@@ -1,0 +1,30 @@
+
+@doc
+
+
+Every 5 minutes fetches the 50 top stories (polling the hackers-news API)
+
+Makes stories available via public API: JSON over http 
+
+
+
+<b>API:</b>
+
+<ol>
+<li>
+<i>http://localhost:8080/?item=N</i> where <i>N</i> is cardinal number of story
+</li>
+<li>
+<i>http://localhost:8080/?item=N&#38;next=M</i> where  is cardinal number of story,
+<i>M</i> - how many stories after story <i>N</i> show on the page
+</li>
+<li>
+<i>http://localhost:8080/?item=N&#38;next</i> - same as <i>http://localhost:8080/?item=N&#38;next=10</i>
+</li>
+</ol>
+
+@end
+
+
+@author Anatoly Rodionov <anatoly.ya.rodionov@gmail.com>
+

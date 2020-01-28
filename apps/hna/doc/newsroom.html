@@ -1,0 +1,190 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Module newsroom</title>
+<link rel="stylesheet" type="text/css" href="stylesheet.css" title="EDoc">
+</head>
+<body bgcolor="white">
+<div class="navbar"><a name="#navbar_top"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<hr>
+
+<h1>Module newsroom</h1>
+<ul class="index"><li><a href="#description">Description</a></li><li><a href="#index">Function Index</a></li><li><a href="#functions">Function Details</a></li></ul>newsroom server.
+
+<p><b>Authors:</b> Anatoly Rodionov (<a href="mailto:anatoly.ya.rodionov@gmail.com"><tt>anatoly.ya.rodionov@gmail.com</tt></a>).</p>
+
+<h2><a name="description">Description</a></h2><p>newsroom server</p>
+
+ <p>newsroom receives from newsman list of first 50 topstories indexes from hackers-news, 
+select indexes which stories are not already stored and sends list of new indexes 
+to newsman</p>
+
+ <p>newsman fetches required stories and send them to newsroom.</p>
+
+ <p>newsroom merges new stories to stories property list and reordered them in the order 
+they are stored in hackers-news.</p>
+
+ All communications between newsman and newsroom are asynchronous.
+
+<h2><a name="index">Function Index</a></h2>
+<table width="100%" border="1" cellspacing="0" cellpadding="2" summary="function index"><tr><td valign="top"><a href="#advise-1">advise/1</a></td><td>Advises new items.</td></tr>
+<tr><td valign="top"><a href="#code_change-3">code_change/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#find_pos-2">find_pos/2</a></td><td>find position of element in property list.</td></tr>
+<tr><td valign="top"><a href="#handle_call-3">handle_call/3</a></td><td></td></tr>
+<tr><td valign="top"><a href="#handle_cast-2">handle_cast/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#handle_info-2">handle_info/2</a></td><td></td></tr>
+<tr><td valign="top"><a href="#indexes-0">indexes/0</a></td><td>Request to return list of all indexes.</td></tr>
+<tr><td valign="top"><a href="#init-1">init/1</a></td><td>Initializes newsroom.</td></tr>
+<tr><td valign="top"><a href="#item-1">item/1</a></td><td>Request to return story.</td></tr>
+<tr><td valign="top"><a href="#items-2">items/2</a></td><td>Request to return list of stories.</td></tr>
+<tr><td valign="top"><a href="#merge-2">merge/2</a></td><td>Merge new stories and restore order.</td></tr>
+<tr><td valign="top"><a href="#new_ones-2">new_ones/2</a></td><td>Finds new items.</td></tr>
+<tr><td valign="top"><a href="#pick-2">pick/2</a></td><td>picks elements from property list.</td></tr>
+<tr><td valign="top"><a href="#pos-1">pos/1</a></td><td>finds position of the story index.</td></tr>
+<tr><td valign="top"><a href="#separate-2">separate/2</a></td><td>Separates old and new items.</td></tr>
+<tr><td valign="top"><a href="#start-0">start/0</a></td><td>Starts newsroom.</td></tr>
+<tr><td valign="top"><a href="#start_link-0">start_link/0</a></td><td>Starts newsroom.</td></tr>
+<tr><td valign="top"><a href="#stories-2">stories/2</a></td><td>Request to return stories.</td></tr>
+<tr><td valign="top"><a href="#story-1">story/1</a></td><td>Request to return story.</td></tr>
+<tr><td valign="top"><a href="#terminate-2">terminate/2</a></td><td>Stops newsroom.</td></tr>
+</table>
+
+<h2><a name="functions">Function Details</a></h2>
+
+<h3 class="function"><a name="advise-1">advise/1</a></h3>
+<div class="spec">
+<p><tt>advise(Indexes::[pos_integer()]) -&gt; any()</tt><br></p>
+<p><tt>Indexes</tt>: possibly new indexes to add to stories<br>
+</p>
+</div><p>Advises new items</p>
+
+<h3 class="function"><a name="code_change-3">code_change/3</a></h3>
+<div class="spec">
+<p><tt>code_change(OldVsn, ST, Extra) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="find_pos-2">find_pos/2</a></h3>
+<div class="spec">
+<p><tt>find_pos(Index::pos_integer(), Plist::[{pos_integer(), term()}]) -&gt; pos_integer() | -1</tt><br></p>
+</div><p>find position of element in property list</p>
+
+<h3 class="function"><a name="handle_call-3">handle_call/3</a></h3>
+<div class="spec">
+<p><tt>handle_call(Msg, From, ST) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="handle_cast-2">handle_cast/2</a></h3>
+<div class="spec">
+<p><tt>handle_cast(Msg, ST) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="handle_info-2">handle_info/2</a></h3>
+<div class="spec">
+<p><tt>handle_info(Msg, ST) -&gt; any()</tt></p>
+</div>
+
+<h3 class="function"><a name="indexes-0">indexes/0</a></h3>
+<div class="spec">
+<p><tt>indexes() -&gt; [pos_integer()]</tt><br></p>
+<p>returns: of all indexes</p>
+</div><p>Request to return list of all indexes</p>
+
+<h3 class="function"><a name="init-1">init/1</a></h3>
+<div class="spec">
+<p><tt>init(X1) -&gt; any()</tt></p>
+</div><p>Initializes newsroom.</p>
+
+<h3 class="function"><a name="item-1">item/1</a></h3>
+<div class="spec">
+<p><tt>item(Pos::pos_integer()) -&gt; binary() | undefined</tt><br></p>
+<p><tt>Pos</tt>: starting position<br>
+</p>
+<p>returns: story in binary json format or undefined</p>
+</div><p>Request to return story</p>
+
+<h3 class="function"><a name="items-2">items/2</a></h3>
+<div class="spec">
+<p><tt>items(Pos::pos_integer(), N::non_neg_integer()) -&gt; [binary()]</tt><br></p>
+<p><tt>Pos</tt>: starting position<br>
+<tt>N</tt>: number of stories<br>
+</p>
+<p>returns: list of stories in binary json format or empty list</p>
+</div><p>Request to return list of stories</p>
+
+<h3 class="function"><a name="merge-2">merge/2</a></h3>
+<div class="spec">
+<p><tt>merge(News::[{pos_integer(), term()}], Indexes::[pos_integer()]) -&gt; any()</tt><br></p>
+<p><tt>News</tt>: new stories<br>
+<tt>Indexes</tt>: order in which stories will be stored<br>
+</p>
+</div><p>Merge new stories and restore order</p>
+
+<h3 class="function"><a name="new_ones-2">new_ones/2</a></h3>
+<div class="spec">
+<p><tt>new_ones(Indexes::[pos_integer()], Plist::[{pos_integer(), term()}]) -&gt; [pos_integer()]</tt><br></p>
+<p><tt>Indexes</tt>: list of indexes<br>
+<tt>Plist</tt>: property list of already stored data<br>
+</p>
+<p>returns: lists of new items</p>
+</div><p>Finds new items</p>
+
+<h3 class="function"><a name="pick-2">pick/2</a></h3>
+<div class="spec">
+<p><tt>pick(Tail::[pos_integer()], Plist::[{pos_integer(), term()}]) -&gt; [{pos_integer(), term()}]</tt><br></p>
+</div><p>picks elements from property list</p>
+
+<h3 class="function"><a name="pos-1">pos/1</a></h3>
+<div class="spec">
+<p><tt>pos(Index::pos_integer()) -&gt; pos_integer() | -1</tt><br></p>
+<p><tt>Index</tt>: index of story<br>
+</p>
+<p>returns: position as positive number or -1 if not found</p>
+</div><p>finds position of the story index</p>
+
+<h3 class="function"><a name="separate-2">separate/2</a></h3>
+<div class="spec">
+<p><tt>separate(Indexes::[pos_integer()], Plist::[{pos_integer(), term()}]) -&gt; {[pos_integer()], [pos_integer()]}</tt><br></p>
+<p><tt>Indexes</tt>: list of indexes<br>
+<tt>Plist</tt>: property list of already stored data<br>
+</p>
+<p>returns: pair of lists of new and already presented items</p>
+</div><p>Separates old and new items</p>
+
+<h3 class="function"><a name="start-0">start/0</a></h3>
+<div class="spec">
+<p><tt>start() -&gt; {ok, pid()}</tt><br></p>
+</div><p>Starts newsroom.</p>
+
+<h3 class="function"><a name="start_link-0">start_link/0</a></h3>
+<div class="spec">
+<p><tt>start_link() -&gt; {ok, pid()}</tt><br></p>
+</div><p>Starts newsroom.</p>
+
+<h3 class="function"><a name="stories-2">stories/2</a></h3>
+<div class="spec">
+<p><tt>stories(Index::pos_integer(), N::pos_integer()) -&gt; [binary()]</tt><br></p>
+<p><tt>Index</tt>: index of story<br>
+<tt>N</tt>: number of stories<br>
+</p>
+<p>returns: list of stories in binary json format or empty list</p>
+</div><p>Request to return stories</p>
+
+<h3 class="function"><a name="story-1">story/1</a></h3>
+<div class="spec">
+<p><tt>story(Index::pos_integer()) -&gt; binary() | undefined</tt><br></p>
+<p><tt>Index</tt>: index of story<br>
+</p>
+<p>returns: story in binary json format or undefined</p>
+</div><p>Request to return story</p>
+
+<h3 class="function"><a name="terminate-2">terminate/2</a></h3>
+<div class="spec">
+<p><tt>terminate(Msg, ST) -&gt; any()</tt></p>
+</div><p>Stops newsroom.</p>
+<hr>
+
+<div class="navbar"><a name="#navbar_bottom"></a><table width="100%" border="0" cellspacing="0" cellpadding="2" summary="navigation bar"><tr><td><a href="overview-summary.html" target="overviewFrame">Overview</a></td><td><a href="http://www.erlang.org/"><img src="erlang.png" align="right" border="0" alt="erlang logo"></a></td></tr></table></div>
+<p><i>Generated by EDoc</i></p>
+</body>
+</html>

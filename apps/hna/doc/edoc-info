@@ -1,0 +1,3 @@
+%% encoding: UTF-8
+{application,hna}.
+{modules,[hna_app,hna_sup,item_h,newsman,newsroom]}.
